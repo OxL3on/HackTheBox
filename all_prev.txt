@@ -1,0 +1,776 @@
+
+
+# Q1–Q44
+
+### Q1 — Display all students
+
+```sql
+SELECT * FROM Student;
+```
+
+### Q2 — Display only student names and departments
+
+```sql
+SELECT name, dept_name
+FROM Student;
+```
+
+### Q3 — Find all students from the Computer Science department
+
+```sql
+SELECT *
+FROM Student
+WHERE dept_name = 'Computer Science';
+```
+
+### Q4 — Find instructors whose salary is greater than 90,000
+
+```sql
+SELECT *
+FROM Instructor
+WHERE salary > 90000;
+```
+
+### Q5 — Find all Biology courses
+
+```sql
+SELECT *
+FROM Course
+WHERE dept_name = 'Biology';
+```
+
+### Q6 — Find courses having more than 3 credits
+
+```sql
+SELECT *
+FROM Course
+WHERE credits > 3;
+```
+
+### Q7 — Display all Biology courses with > 3 credits, ordered by credits descending
+
+```sql
+SELECT *
+FROM Course
+WHERE dept_name = 'Biology'
+AND credits > 3
+ORDER BY credits DESC;
+```
+
+### Q8 — Find all students whose name starts with 'A'
+
+```sql
+SELECT *
+FROM Student
+WHERE name LIKE 'A%';
+```
+
+### Q9 — Display the different departments in which students are enrolled
+
+```sql
+SELECT DISTINCT dept_name
+FROM Student;
+```
+
+### Q10 — Find the highest instructor salary
+
+```sql
+SELECT MAX(salary) AS highest_salary
+FROM Instructor;
+```
+
+### Q11 — Find the average instructor salary
+
+```sql
+SELECT AVG(salary) AS average_salary
+FROM Instructor;
+```
+
+### Q12 — Find the total instructor salary
+
+```sql
+SELECT SUM(salary) AS total_salary
+FROM Instructor;
+```
+
+### Q13 — Find the number of instructors
+
+```sql
+SELECT COUNT(*) AS total_instructors
+FROM Instructor;
+```
+
+### Q14 — Find the number of distinct departments having instructors
+
+```sql
+SELECT COUNT(DISTINCT dept_name) AS active_departments
+FROM Instructor;
+```
+
+### Q15 — For each department, display department name and number of instructors
+
+```sql
+SELECT dept_name, COUNT(*) AS total_instructors
+FROM Instructor
+GROUP BY dept_name;
+```
+
+### Q16 — For each department, display department name and average salary
+
+```sql
+SELECT dept_name, AVG(salary) AS avg_salary
+FROM Instructor
+GROUP BY dept_name;
+```
+
+### Q17 — For each department, display department name and total salary
+
+```sql
+SELECT dept_name, SUM(salary) AS total_salary
+FROM Instructor
+GROUP BY dept_name;
+```
+
+### Q18 — Find departments having more than 3 instructors
+
+```sql
+SELECT dept_name, COUNT(*) AS total_instructors
+FROM Instructor
+GROUP BY dept_name
+HAVING COUNT(*) > 3;
+```
+
+### Q19 — Display student name and their department name using a JOIN
+
+```sql
+SELECT s.name AS student_name, d.dept_name
+FROM Student s
+JOIN Department d
+ON s.dept_name = d.dept_name;
+```
+
+### Q20 — Display student name along with their advisor name
+
+```sql
+SELECT s.name AS student_name,
+       i.name AS advisor_name
+FROM Student s
+JOIN Instructor i
+ON s.advisor_id = i.ID;
+```
+
+### Q21 — List students with > 50 credits along with their advisor name and department
+
+```sql
+SELECT s.name AS student_name,
+       i.name AS advisor_name,
+       s.dept_name AS department,
+       s.total_credits
+FROM Student s
+JOIN Instructor i
+ON s.advisor_id = i.ID
+WHERE s.total_credits > 50;
+```
+
+### Q22 — Display course title and department using a JOIN
+
+```sql
+SELECT c.title AS course_title,
+       d.dept_name,
+       d.building
+FROM Course c
+JOIN Department d
+ON c.dept_name = d.dept_name;
+```
+
+### Q23 — Display student name, course title, and grade
+
+```sql
+SELECT s.name AS student_name,
+       c.title AS course_title,
+       t.grade
+FROM Student s
+JOIN Takes t
+ON s.ID = t.student_id
+JOIN Section sec
+ON t.section_id = sec.section_id
+JOIN Course c
+ON sec.course_id = c.course_id;
+```
+
+### Q24 — Display instructor name, course title, semester, and year
+
+```sql
+SELECT i.name AS instructor_name,
+       c.title AS course_title,
+       sec.semester,
+       sec.year
+FROM Instructor i
+JOIN Section sec
+ON i.ID = sec.instructor_id
+JOIN Course c
+ON sec.course_id = c.course_id;
+```
+
+### Q25 — Find the total number of distinct students who have taken course sections taught by instructor 110011
+
+```sql
+SELECT COUNT(DISTINCT t.student_id) AS total_distinct_students
+FROM Takes t
+JOIN Section sec
+ON t.section_id = sec.section_id
+WHERE sec.instructor_id = 110011;
+```
+
+### Q26 — Find the student(s) with the highest total credits using a subquery
+
+```sql
+SELECT *
+FROM Student
+WHERE total_credits = (
+    SELECT MAX(total_credits)
+    FROM Student
+);
+```
+
+### Q27 — Find instructors whose salary is greater than the average instructor salary
+
+```sql
+SELECT ID, name, salary, dept_name
+FROM Instructor
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Instructor
+);
+```
+
+### Q28 — Find courses whose credits are greater than the average course credits
+
+```sql
+SELECT course_id, title, credits
+FROM Course
+WHERE credits > (
+    SELECT AVG(credits)
+    FROM Course
+);
+```
+
+### Q29 — Find classrooms that were NEVER used by any section
+
+```sql
+SELECT c.*
+FROM Classroom c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Section s
+    WHERE s.building = c.building
+    AND s.room_number = c.room_number
+);
+```
+
+### Q30 — Find all classrooms that have never been used for any section in Spring 2009
+
+```sql
+SELECT c.building, c.room_number, c.capacity
+FROM Classroom c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Section s
+    WHERE s.building = c.building
+    AND s.room_number = c.room_number
+    AND s.semester = 'Spring'
+    AND s.year = 2009
+);
+```
+
+### Q31 — Find courses offered in Fall 2017
+
+```sql
+SELECT course_id
+FROM Section
+WHERE semester = 'Fall'
+AND year = 2017;
+```
+
+### Q32 — Find courses offered in Spring 2018
+
+```sql
+SELECT course_id
+FROM Section
+WHERE semester = 'Spring'
+AND year = 2018;
+```
+
+### Q33 — Find courses offered in Fall 2017 OR Spring 2018 using UNION
+
+```sql
+SELECT course_id
+FROM Section
+WHERE semester = 'Fall'
+AND year = 2017
+
+UNION
+
+SELECT course_id
+FROM Section
+WHERE semester = 'Spring'
+AND year = 2018;
+```
+
+### Q34 — Find courses offered in Fall 2017 but NOT in Spring 2018
+
+```sql
+SELECT course_id
+FROM Section
+WHERE semester = 'Fall'
+AND year = 2017
+
+MINUS
+
+SELECT course_id
+FROM Section
+WHERE semester = 'Spring'
+AND year = 2018;
+```
+
+### Q35 — Increase salary of all instructors by 5%
+
+```sql
+UPDATE Instructor
+SET salary = salary * 1.05;
+
+COMMIT;
+```
+
+### Q36 — Conditional Salary Increase: > 100,000 gets 3%, others get 5%
+
+```sql
+UPDATE Instructor
+SET salary =
+    CASE
+        WHEN salary > 100000 THEN salary * 1.03
+        ELSE salary * 1.05
+    END;
+
+COMMIT;
+```
+
+### Q37 — Increase salaries only for Computer Science instructors by 10%
+
+```sql
+UPDATE Instructor
+SET salary = salary * 1.10
+WHERE dept_name = 'Computer Science';
+
+COMMIT;
+```
+
+### Q38 — Create STUDENT2 table
+
+```sql
+CREATE TABLE STUDENT2 (
+    SID NUMBER PRIMARY KEY,
+    SNAME VARCHAR2(50),
+    DEPT VARCHAR2(30),
+    MARKS NUMBER(5,2)
+);
+```
+
+### Q39 — Insert 5 students into STUDENT2
+
+```sql
+INSERT INTO STUDENT2 VALUES (1, 'Arif', 'CSE', 85);
+INSERT INTO STUDENT2 VALUES (2, 'Ayesha', 'CSE', 92);
+INSERT INTO STUDENT2 VALUES (3, 'Rahim', 'EEE', 78);
+INSERT INTO STUDENT2 VALUES (4, 'Anika', 'CSE', 88);
+INSERT INTO STUDENT2 VALUES (5, 'Karim', 'BBA', 75);
+
+COMMIT;
+```
+
+### Q40 — Find names starting with 'A'
+
+```sql
+SELECT *
+FROM STUDENT2
+WHERE SNAME LIKE 'A%';
+```
+
+### Q41 — Find student(s) with highest marks using a subquery
+
+```sql
+SELECT *
+FROM STUDENT2
+WHERE MARKS = (
+    SELECT MAX(MARKS)
+    FROM STUDENT2
+);
+```
+
+### Q42 — Create a view of instructors
+
+```sql
+CREATE VIEW instructor_view AS
+SELECT ID, name, salary, dept_name
+FROM Instructor;
+```
+
+### Q43 — Select data from the instructor view
+
+```sql
+SELECT *
+FROM instructor_view;
+
+SELECT name, salary
+FROM instructor_view
+WHERE salary > 90000;
+```
+
+### Q44 — Create user Judy and grant required privileges
+
+```sql
+CREATE USER Judy IDENTIFIED BY judy123;
+
+GRANT CREATE SESSION TO Judy;
+GRANT CREATE TABLE TO Judy;
+GRANT CREATE VIEW TO Judy;
+GRANT CREATE SYNONYM TO Judy;
+```
+
+### Q44 — Grant all privileges in one statement
+
+```sql
+GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SYNONYM
+TO Judy;
+```
+
+### Q44 — Revoke CREATE VIEW privilege
+
+```sql
+REVOKE CREATE VIEW FROM Judy;
+```
+
+---
+
+# CLASS LAB — Advanced SQL
+
+### Self-Join — Display employee name and manager name
+
+```sql
+SELECT e.emp_name AS Employee,
+       m.emp_name AS Manager
+FROM EMPLOYEES e
+LEFT JOIN EMPLOYEES m
+ON e.manager_id = m.emp_id;
+```
+
+---
+
+# CLASS LAB — Window Functions
+
+### Window Function — ROW_NUMBER, RANK and DENSE_RANK
+
+```sql
+SELECT ID, NAME, SALARY,
+       ROW_NUMBER() OVER (ORDER BY SALARY DESC) AS Row_Num,
+       RANK() OVER (ORDER BY SALARY DESC) AS Rnk,
+       DENSE_RANK() OVER (ORDER BY SALARY DESC) AS Dense_Rnk
+FROM Employees1;
+```
+
+### Window Function — DENSE_RANK by Department
+
+```sql
+SELECT ID, NAME, DEPARTMENT, SALARY,
+       DENSE_RANK() OVER (
+           PARTITION BY DEPARTMENT
+           ORDER BY SALARY DESC
+       ) AS Dept_Rank
+FROM Employees1;
+```
+
+### Window Function — LAG previous salary
+
+```sql
+SELECT NAME, SALARY,
+       LAG(SALARY, 1) OVER (
+           ORDER BY SALARY DESC
+       ) AS Previous_Salary
+FROM Employees1;
+```
+
+---
+
+# PL/SQL — Basic Block
+
+### Display employee name and salary using %TYPE
+
+```sql
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_emp_id NUMBER := 101;
+    v_emp_name Employees1.NAME%TYPE;
+    v_salary NUMBER(10,2);
+BEGIN
+    SELECT NAME, SALARY
+    INTO v_emp_name, v_salary
+    FROM Employees1
+    WHERE ID = v_emp_id;
+
+    DBMS_OUTPUT.PUT_LINE(
+        'Employee Name: ' || v_emp_name ||
+        ' | Salary: ' || v_salary
+    );
+END;
+/
+```
+
+### Implicit Cursor — Increase IT employees' salary by 10% and check SQL%FOUND / SQL%ROWCOUNT
+
+```sql
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_rows_updated NUMBER;
+BEGIN
+    UPDATE Employees1
+    SET Salary = Salary + (Salary * 0.10)
+    WHERE Department = 'IT';
+
+    IF SQL%FOUND THEN
+        v_rows_updated := SQL%ROWCOUNT;
+
+        DBMS_OUTPUT.PUT_LINE(
+            'Total ' || v_rows_updated ||
+            ' employees salary updated.'
+        );
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(
+            'No employee information updated.'
+        );
+    END IF;
+
+    COMMIT;
+END;
+/
+```
+
+---
+
+# Explicit Cursor
+
+### Explicit Cursor — Display IT employees
+
+```sql
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR c_emp IS
+        SELECT ID, NAME, SALARY
+        FROM Employees1
+        WHERE DEPARTMENT = 'IT';
+
+    v_id Employees1.ID%TYPE;
+    v_name Employees1.NAME%TYPE;
+    v_salary Employees1.SALARY%TYPE;
+
+BEGIN
+    OPEN c_emp;
+
+    LOOP
+        FETCH c_emp INTO v_id, v_name, v_salary;
+
+        EXIT WHEN c_emp%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE(
+            'ID: ' || v_id ||
+            ' | Name: ' || v_name ||
+            ' | Salary: ' || v_salary
+        );
+    END LOOP;
+
+    CLOSE c_emp;
+END;
+/
+```
+
+### Cursor FOR LOOP — Display all employees
+
+```sql
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR c_emp IS
+        SELECT ID, NAME, SALARY
+        FROM Employees1;
+
+BEGIN
+    FOR emp_rec IN c_emp LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            'Name: ' || emp_rec.NAME ||
+            ' - Salary: ' || emp_rec.SALARY
+        );
+    END LOOP;
+END;
+/
+```
+
+---
+
+# TRIGGERS
+
+### Trigger 1 — AFTER INSERT audit log
+
+```sql
+CREATE TABLE student_audit_table (
+    student_id NUMBER,
+    name VARCHAR2(50),
+    age NUMBER
+);
+
+CREATE TABLE student_log (
+    student_id NUMBER,
+    name VARCHAR2(50),
+    log_date DATE
+);
+
+CREATE OR REPLACE TRIGGER trg_student_insert
+AFTER INSERT ON student_audit_table
+FOR EACH ROW
+BEGIN
+    INSERT INTO student_log
+    VALUES (:NEW.student_id, :NEW.name, SYSDATE);
+END;
+/
+```
+
+### Test Trigger 1
+
+```sql
+INSERT INTO student_audit_table
+VALUES (102, 'Rahim', 22);
+
+SELECT * FROM student_log;
+```
+
+### Trigger 2 — AFTER UPDATE salary audit
+
+```sql
+CREATE TABLE employee_pay (
+    emp_id NUMBER,
+    name VARCHAR2(50),
+    salary NUMBER
+);
+
+CREATE TABLE salary_log (
+    emp_id NUMBER,
+    old_salary NUMBER,
+    new_salary NUMBER,
+    change_date DATE
+);
+
+INSERT INTO employee_pay
+VALUES (101, 'Rahim', 30000);
+
+COMMIT;
+
+CREATE OR REPLACE TRIGGER trg_salary_update
+AFTER UPDATE OF salary ON employee_pay
+FOR EACH ROW
+BEGIN
+    INSERT INTO salary_log
+    VALUES (
+        :OLD.emp_id,
+        :OLD.salary,
+        :NEW.salary,
+        SYSDATE
+    );
+END;
+/
+```
+
+### Test Trigger 2
+
+```sql
+UPDATE employee_pay
+SET salary = 50000
+WHERE emp_id = 101;
+
+SELECT * FROM salary_log;
+```
+
+### Trigger 3 — BEFORE INSERT automatic salary correction
+
+```sql
+CREATE OR REPLACE TRIGGER trg_before_employee
+BEFORE INSERT ON employee_pay
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < 20000 THEN
+        :NEW.salary := 20000;
+    END IF;
+END;
+/
+```
+
+### Test Trigger 3
+
+```sql
+INSERT INTO employee_pay
+VALUES (106, 'Rony', 15000);
+
+SELECT *
+FROM employee_pay
+WHERE emp_id = 106;
+```
+
+### Trigger 4 — BEFORE UPDATE negative salary prevention
+
+```sql
+CREATE OR REPLACE TRIGGER trg_before_salary_update
+BEFORE UPDATE OF salary ON employee_pay
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < 0 THEN
+        :NEW.salary := 0;
+    END IF;
+END;
+/
+```
+
+### Test Trigger 4
+
+```sql
+UPDATE employee_pay
+SET salary = -5000
+WHERE emp_id = 101;
+
+SELECT *
+FROM employee_pay
+WHERE emp_id = 101;
+```
+
+### Trigger 5 — BEFORE DELETE notification and audit log
+
+```sql
+CREATE OR REPLACE TRIGGER trg_before_delete
+BEFORE DELETE ON employee_pay
+FOR EACH ROW
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(
+        'Employee ' || :OLD.name ||
+        ' is about to be DELETED!'
+    );
+
+    INSERT INTO salary_log
+    VALUES (
+        :OLD.emp_id,
+        :OLD.salary,
+        NULL,
+        SYSDATE
+    );
+END;
+/
+```
+
