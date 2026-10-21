@@ -2,7 +2,7 @@
 
 ## Phase 1: Beginner
 - [X] [Vulnversity](https://tryhackme.com/room/vulnversity) - [Writeup1](https://mdleonislam.vercel.app/blog/tryhackme-vulnversity) , [Writeup2](https://github.com/OxL3on/TryHackMe/blob/main/Labs/Vulnversity.md)
-- [X] [Basic Pentesting](https://tryhackme.com/room/basicpentestingjt) - [Writeup1](https://mdleonislam.vercel.app/blog/tryhackme-basic-pentesting) , [Writeup2](https://github.com/OxL3on/TryHackMe/edit/main/Labs/Basic%20Pentesting.md)
+- [X] [Basic Pentesting](https://tryhackme.com/room/basicpentestingjt) - [Writeup1](https://mdleonislam.vercel.app/blog/tryhackme-basic-pentesting) , [Writeup2](https://github.com/OxL3on/TryHackMe/blob/main/Labs/Basic%20Pentesting.md)
 - [ ] [Kenobi](https://tryhackme.com/room/kenobi)
 - [ ] [Blue](https://tryhackme.com/room/blue)
 - [ ] [Ice](https://tryhackme.com/room/ice)
