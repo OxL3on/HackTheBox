@@ -1,8 +1,8 @@
 # TryHackMe CPTS Practical Lab Goals
 
 ## Phase 1: Beginner
-- [ ] [Vulnversity](https://tryhackme.com/room/vulnversity)
-- [ ] [Basic Pentesting](https://tryhackme.com/room/basicpentestingjt)
+- [X] [Vulnversity](https://tryhackme.com/room/vulnversity)  -- [Writeup1](https://mdleonislam.vercel.app/blog/tryhackme-vulnversity)  -- [Writeup2]([url](https://github.com/OxL3on/TryHackMe/blob/main/Labs/Vulnversity.md))
+- [X] [Basic Pentesting](https://tryhackme.com/room/basicpentestingjt)  -- [Writeup1]([url](https://mdleonislam.vercel.app/blog/tryhackme-basic-pentesting))   -- [Writeup2]([url](https://github.com/OxL3on/TryHackMe/edit/main/Labs/Basic%20Pentesting.md))
 - [ ] [Kenobi](https://tryhackme.com/room/kenobi)
 - [ ] [Blue](https://tryhackme.com/room/blue)
 - [ ] [Ice](https://tryhackme.com/room/ice)
