@@ -27,6 +27,54 @@
 # Windows Privilege Escalation
 
 #### Situational Awareness
+```
+ipconfig /all
+```
+```
+arp -a
+```
+```
+route print
+```
+```
+Get-MpComputerStatus
+```
+```
+Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+```
+```
+Get-AppLockerPolicy -Local | Test-AppLockerPolicy -path C:\Windows\System32\cmd.exe -User Everyone
+```
+
+####  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
