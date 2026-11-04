@@ -24,4 +24,16 @@
 - **Firewall and IDS/IPS Evasion** : `sudo nmap 10.129.2.28 -p 21,22,25 -sS -Pn -n --disable-arp-ping --packet-trace` , `sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace` , `sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5` , `sudo nmap 10.129.2.28 -n -Pn -p445 -O` , `sudo nmap 10.129.2.28 -n -Pn -p 445 -O -S 10.129.2.200 -e tun0` , `sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace` , `sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53` , `ncat -nv --source-port 53 10.129.2.28 50000`
 
 
-# 
+# Windows Privilege Escalation
+
+#### Situational Awareness
+
+
+
+
+
+
+
+
+
+
