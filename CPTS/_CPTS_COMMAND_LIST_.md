@@ -45,8 +45,26 @@ Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
 ```
 Get-AppLockerPolicy -Local | Test-AppLockerPolicy -path C:\Windows\System32\cmd.exe -User Everyone
 ```
+```
+# 1. Get the local AppLocker policy
+$LocalPolicy = Get-AppLockerPolicy -Local
 
-####  
+# 2. Scan a directory and find all blocked .exe files
+Get-ChildItem -Path "C:\Windows\System32" -Filter *.exe -Recurse -ErrorAction SilentlyContinue | 
+    ForEach-Object {
+        $Test = $LocalPolicy | Test-AppLockerPolicy -Path $_.FullName -User Everyone
+        if ($Test.PolicyDecision -eq "Denied") {
+            [PSCustomObject]@{
+                FileName       = $_.Name
+                FullPath       = $_.FullName
+                PolicyDecision = $Test.PolicyDecision
+                MatchingRule   = $Test.MatchingRule
+            }
+        }
+    } | Format-Table -AutoSize
+```
+
+#### Initial Enumeration
 
 
 
